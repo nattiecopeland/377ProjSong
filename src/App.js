@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import Table from './Table'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+   render() {
+      const songs = [
+         {
+            Artist: 'The Sponges',
+            Name: 'Clean Yo Shit',
+            Key: 'Am',
+            BPM:'90',
+         },
+         {
+            Artist: 'Lame Impala',
+            Name: 'The Less I know the Worse',
+            Key: 'Am',
+            BPM: '110',
+         },
+         {
+            Artist: 'Insert Song Name Here',
+            Name:'Songy Song Song',
+            Key:'Am',
+            BPM: '120',
+         },
+         {
+            Artist: 'Phil and the Boys',
+            Name: 'Food Fight',
+            Key: 'Am',
+            BPM: '100',
+         },
+      ]
+
+      return (
+         <div className="App">
+           <h1>Displaying results for Key:Am</h1>
+           <Table songData = {songs} />
+         </div>
+      )
+   }
 }
 
 export default App;
