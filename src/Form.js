@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Table from "./Table";
 
 class Form extends Component {
    initialState = {
@@ -23,6 +24,7 @@ class Form extends Component {
 
       return (
          <form>
+            <h1>Add a song to the Database with this form!</h1>
             <label htmlFor="Artist">Artist</label>
             <input
                type="text"

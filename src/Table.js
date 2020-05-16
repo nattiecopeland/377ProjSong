@@ -35,10 +35,13 @@ class Table extends Component {
     const {songData} = this.props
  
     return (
-      <table>
-        <TableHeader />
-        <TableBody songData={songData} />
-      </table>
+      <>
+        <h1>Displaying results for Key:Am</h1>
+        <table>
+          <TableHeader />
+          <TableBody songData={songData} />
+        </table>
+      </>
     )
   }
 }
