@@ -12,42 +12,6 @@ app = Flask(__name__)
 #CORS stands for Cross Origin Requests.
 CORS(app) #Here we'll allow requests coming from any domain. Not recommended for production environment.
 
-songs = { 
-    "song_list" :
-    [
-        {  
-            "name" : "Brown Eyed Girl",
-            "artist" : "Van Morrison",
-            "key" : "F major",
-            "bpm" : "120"
-        },
-        {  
-            "name" : "Yellow Submarine",
-            "artist" : "The Beatles",
-            "key" : "G Major",
-            "bpm" : "112"
-        },
-        {  
-            "name" : "The Twist",
-            "artist" : "Chubby Checker",
-            "key" : "E Major",
-            "bpm" : "157"
-        },
-        {  
-            "name" : "Smooth",
-            "artist" : "Santana",
-            "key" : "A Major",
-            "bpm" : "116"
-        },
-        {  
-            "name" : "Uptown Funk",
-            "artist" : "Mark Ronson",
-            "key" : "C Major",
-            "bpm" : "115"
-        }    
-    ]
-}
-
 @app.route('/')
 def hello_world():
     return 'Welcome to Song Bank!'
