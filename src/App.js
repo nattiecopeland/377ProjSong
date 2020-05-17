@@ -1,72 +1,32 @@
 import React, { Component } from 'react'
 import HomePage from './HomePage'
 import SearchPage from './SearchPage'
-import Table from './Table'
 import Form from './Form'
 
 class App extends Component {
    state = {
-      page : "home",
-      songs : [
-      {
-         Artist: 'The Sponges',
-         Name: 'Clean Yo Shit',
-         Key: 'Am',
-         BPM:'90',
-      },
-      {
-         Artist: 'Lame Impala',
-         Name: 'The Less I know the Worse',
-         Key: 'Am',
-         BPM: '110',
-      },
-      {
-         Artist: 'Insert Song Name Here',
-         Name:'Songy Song Song',
-         Key:'Am',
-         BPM: '120',
-      },
-      {
-         Artist: 'Phil and the Boys',
-         Name: 'Food Fight',
-         Key: 'Am',
-         BPM: '100',
-      },
-   ],
+      page : "home"
    }
 
-   changePageHome = () => {
+   handleChange = event => {
+      const {name} = event.target
+
       this.setState({
-         ...this.state,
-         page: "home"
-      })
-   }
-   changePageSearch = () => {
-      this.setState({
-         ...this.state,
-         page: "search"
-      })
-   }
-   changePageAdd = () => {
-      this.setState({
-         ...this.state,
-         page: "add"
+          page: name
       })
    }
 
    render(){
-      const { songs } = this.state
-
       return (
          <div className="App">
             <>
-               <button onClick={this.changePageHome}>home</button>{' '}
-               <button onClick={this.changePageSearch}>search</button>{' '}
-               <button onClick={this.changePageAdd}>add</button>{' '}
+               <button name="home" onClick={this.handleChange}>home</button>{' '}
+               <button name="search" onClick={this.handleChange}>search</button>{' '}
+               <button name="add" onClick={this.handleChange}>add</button>{' '}
             </>
-            {this.state.page == "home" && <HomePage />}
-            {this.state.page == "search" && <Table songData = {songs} /> && <SearchPage />}
-            {this.state.page == "add" && <Form />}
+            {this.state.page === "home" && <HomePage />}
+            {this.state.page === "search" && <SearchPage />}
+            {this.state.page === "add" && <Form />}
          </div>
       )
    }
