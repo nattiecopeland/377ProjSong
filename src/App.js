@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import HomePage from './HomePage'
+import SearchPage from './SearchPage'
 import Table from './Table'
 import Form from './Form'
 
@@ -64,7 +65,7 @@ class App extends Component {
                <button onClick={this.changePageAdd}>add</button>{' '}
             </>
             {this.state.page == "home" && <HomePage />}
-            {this.state.page == "search" && <Table songData = {songs} />}
+            {this.state.page == "search" && <Table songData = {songs} /> && <SearchPage />}
             {this.state.page == "add" && <Form />}
          </div>
       )
