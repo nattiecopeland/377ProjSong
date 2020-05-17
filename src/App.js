@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
+import HomePage from './HomePage'
 import Table from './Table'
 import Form from './Form'
 
 class App extends Component {
    state = {
+      page : "home",
       songs : [
       {
          Artist: 'The Sponges',
@@ -31,15 +33,39 @@ class App extends Component {
       },
    ],
    }
+
+   changePageHome = () => {
+      this.setState({
+         ...this.state,
+         page: "home"
+      })
+   }
+   changePageSearch = () => {
+      this.setState({
+         ...this.state,
+         page: "search"
+      })
+   }
+   changePageAdd = () => {
+      this.setState({
+         ...this.state,
+         page: "add"
+      })
+   }
+
    render(){
       const { songs } = this.state
-      
-   return (
+
+      return (
          <div className="App">
-           <h1>Displaying results for Key:Am</h1>
-           <Table songData = {songs} />
-           <h1>Add a song to the Database with this form!</h1>
-           <Form />
+            <>
+               <button onClick={this.changePageHome}>home</button>{' '}
+               <button onClick={this.changePageSearch}>search</button>{' '}
+               <button onClick={this.changePageAdd}>add</button>{' '}
+            </>
+            {this.state.page == "home" && <HomePage />}
+            {this.state.page == "search" && <Table songData = {songs} />}
+            {this.state.page == "add" && <Form />}
          </div>
       )
    }
