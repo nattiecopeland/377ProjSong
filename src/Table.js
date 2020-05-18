@@ -55,7 +55,6 @@ class Table extends Component {
       <>
         {this.state.page==="resultsPage" &&
         <>
-            <h1>Displaying results for Key:Am</h1>
             <table>
             <TableHeader />
             <this.TableBody songData={songData} />
