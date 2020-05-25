@@ -1,22 +1,11 @@
 import React, {Component} from 'react'
 import Table from './Table'
+import axios from 'axios';
 
 class SearchPage extends Component {
 
     state = {
-        searchResult : [
-           {
-              Name: 'Hey',
-              Artist: 'byeb', 
-              Key: 'am',
-              BPM: '120',
-           },
-           {
-              Name: 'Yo',
-              Artist: 'B',
-              Key: 'dm',
-              BPM: '120',
-           },],
+        searchResult : [],
         searchQuery : "Artist",
         searchValue : ''
     }
@@ -29,14 +18,20 @@ class SearchPage extends Component {
         })
     }
 
+    makeGetCall(event) {
+      return axios.get('http://localhost:5000/songs', event.target)
+       .then(function (response) {
+         console.log(response);
+         return response;
+       })
+       .catch(function (error) {
+         console.log(error);
+       });
+    }
 
     submitSearchRequest = (event ) => {
-        //This is where the page will submit a search to the backend
-        //After this it should show the search result page, formatted under Table.js
-
-        //Current behavior is to mimic the query and value back to the user
-        //alert(this.state.searchQuery + " : " + this.state.searchValue)
-        event.preventDefault()
+       this.setState({ searchResult : [this.makeGetCall(event)] });
+       event.preventDefault()
         
     }
 
