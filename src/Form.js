@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 //import Table from "./Table";
+import axios from 'axios';
 
 class Form extends Component {
    initialState = {
@@ -18,7 +19,27 @@ class Form extends Component {
          [name]: value,
       })
    }
+   submitForm = () => {
+      this.handleSubmit(this.state)
+      this.setState(this.initialState)
+   }
+
+   makePostCall(song) {
+      return axios.post('http://localhost:5000/songs', song)
+       .then(function (response) {
+         console.log(response);
+         return response;
+      })
+      .catch(function (error) {
+       console.log(error);
+     });
+   }
    
+   handleSubmit = song => {
+      this.makePostCall(song)
+   }
+   
+
    render() {
       const { Artist, Name, Key, BPM } = this.state;
 
@@ -53,7 +74,7 @@ class Form extends Component {
                id="BPM"
                value={BPM}
                onChange={this.handleChange} />
-            <input type="button" value="Submit" />
+            <input type="button" value="Submit" onClick={this.submitForm} />
          </form>
       );
    }
