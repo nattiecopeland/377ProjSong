@@ -1,8 +1,11 @@
 import React, {Component} from 'react'
+import Table from './Table'
+import axios from 'axios';
 
 class SearchPage extends Component {
 
     state = {
+        searchResult : [],
         searchQuery : "Artist",
         searchValue : ''
     }
@@ -15,35 +18,48 @@ class SearchPage extends Component {
         })
     }
 
-    submitSearchRequest = (event) => {
-        //This is where the page will submit a search to the backend
-        //After this it should show the search result page, formatted under Table.js
+    makeGetCall(event) {
+      return axios.get('http://localhost:5000/songs', event.target)
+       .then(function (response) {
+         console.log(response);
+         return response;
+       })
+       .catch(function (error) {
+         console.log(error);
+       });
+    }
 
-        //Current behavior is to mimic the query and value back to the user
-        alert(this.state.searchQuery + " : " + this.state.searchValue)
-        event.preventDefault()
+    submitSearchRequest = (event ) => {
+       this.setState({ searchResult : [this.makeGetCall(event)] });
+       event.preventDefault()
+        
     }
 
 
     render() {
         return(
-            <form onSubmit={this.submitSearchRequest}>
-                <h1>Search for a song</h1>
-                <label>Search by:</label>
-                <select name="searchQuery"
-                        searchQuery={this.state.searchQuery}
-                        onChange={this.handleChange}>
+            <>
+               <form onSubmit={this.submitSearchRequest}>
+                 <h1>Search for a song</h1>
+                 <label>Search by:</label>
+                 <select name="searchQuery"
+                       searchQuery={this.state.searchQuery}
+                       onChange={this.handleChange}>
                     <option searchQuery="Artist">Artist</option>
                     <option searchQuery="Key">Key</option>
                     <option searchQuery="BPM">BPM</option>
                     <option searchQuery="Name">Name</option>
-                </select>
-                <label>Search for:</label>
-                <input type="text"
+                 </select>
+                 <label>Search for:</label>
+                 <input type="text"
                        name="searchValue"
                        onChange={this.handleChange} />
-                <input type="submit" value="Submit" />
-            </form>
+                 <input type="submit" value="Submit" />
+               </form>
+               <div className="table">
+                 <Table songData={this.state.searchResult} searchTerm={this.state.searchQuery} searchWord={this.state.searchValue} goTo={this.goTo}/>
+               </div>
+            </>
         )
     }
 

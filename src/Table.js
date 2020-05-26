@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import Song from "./Song";
 
 
 const TableHeader = () => {
@@ -10,37 +10,61 @@ const TableHeader = () => {
             <th>Name</th>
             <th>Key</th>
             <th>BPM</th>
+            <th>Page</th>
          </tr>
       </thead>
    )
 }
 
-const TableBody = props => {
-   const rows = props.songData.map((row, index) => {
-      return (
-         <tr key={index}>
-            <td>{row.Artist}</td>
-            <td>{row.Name}</td>
-            <td>{row.Key}</td>
-            <td>{row.BPM}</td>
-         </tr>
-      )
-   })
-
-   return <tbody>{rows}</tbody>
-}
-
 class Table extends Component {
+    state = { page : "resultsPage"}
+  TableBody = props => {
+    const rows = props.songData.map((row, index) => {
+        return (
+            <tr key={index}>
+                <td>{row.Artist}</td>
+                <td>{row.Name}</td>
+                <td>{row.Key}</td>
+                <td>{row.BPM}</td>
+                <td>
+                    <input type="button" value="link" onClick={() => {this.goToSong(row)}}/>
+                </td>
+            </tr>
+        )
+    })
+    return <tbody>{rows}</tbody>
+  }
+
+  goToSong = element => {
+      this.setState({
+          page: "songPage",
+          row: element
+      })
+  }
+
+  returnToResults = () => {
+        this.setState({
+        page: "resultsPage"
+        })
+  }
+
   render() {
     const {songData} = this.props
  
     return (
       <>
-        <h1>Displaying results for Key:Am</h1>
-        <table>
-          <TableHeader />
-          <TableBody songData={songData} />
-        </table>
+        {this.state.page==="resultsPage" &&
+        <>
+            <table>
+            <TableHeader />
+            <this.TableBody songData={songData} />
+            </table>
+        </>}
+        {this.state.page==="songPage" &&
+        <>
+            <Song name={this.state.row.Name} artist={this.state.row.Artist} Key={this.state.row.Key} bpm={this.state.row.BPM} />
+            <input type="button" value="Return to results" onClick={() => {this.returnToResults()}}/>
+        </>}
       </>
     )
   }
