@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import HomePage from './HomePage'
-import SearchPage from './SearchPage'
+import SearchPage from './searchPage'
 import Form from './Form'
+import Song from './Song'
 
 class App extends Component {
    state = {
