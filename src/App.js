@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import HomePage from './HomePage'
-import SearchPage from './searchPage'
+import SearchPage from './SearchPage'
 import Form from './Form'
 import Song from './Song'
 
