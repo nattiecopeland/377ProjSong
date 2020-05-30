@@ -43,25 +43,25 @@ class SongBank(Model):
         return songs
 
     def find_by_name(self, name):
-        songs = list(self.collection.find({"name": name}))
+        songs = list(self.collection.find({"Name": name}))
         for song in songs:
             song["_id"] = str(song["_id"])
         return songs
 
     def find_by_artist(self, artist):
-        songs = list(self.collection.find({"artist": artist}))
+        songs = list(self.collection.find({"Artist": artist}))
         for song in songs:
             song["_id"] = str(song["_id"])
         return songs
 
     def find_by_key(self, key):
-        songs = list(self.collection.find({"key": key}))
+        songs = list(self.collection.find({"Key": key}))
         for song in songs:
             song["_id"] = str(song["_id"])
         return songs
 
     def find_by_bpm(self, bpm):
-        songs = list(self.collection.find({"bpm": bpm}))
+        songs = list(self.collection.find({"BPM": bpm}))
         for song in songs:
             song["_id"] = str(song["_id"])
         return songs

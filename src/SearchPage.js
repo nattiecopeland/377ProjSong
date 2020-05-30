@@ -7,8 +7,7 @@ class SearchPage extends Component {
     state = {
         searchResult : [],
         searchQuery : "Artist",
-        searchValue : "",
-          
+        searchValue : ''
     }
 
     handleChange = event => {
@@ -19,11 +18,12 @@ class SearchPage extends Component {
         })
     }
 
-    makeGetCall(param) {
-      axios.get('http://localhost:5000/songs', param)
-       .then(res => {
-         const song_list = res.data.song_list;
-         this.setState({ searchResult : song_list });
+    makeGetCall(event) {
+
+      axios.get('http://localhost:5000/songs', {params: { [this.state.searchQuery] : this.state.searchValue}})
+       .then(response => {
+         console.log(response);
+         this.setState({searchResult : response.data.song_list});
        })
        .catch(function (error) {
          console.log(error);
@@ -31,34 +31,8 @@ class SearchPage extends Component {
     }
 
     submitSearchRequest = (event) => {
-       const {name, value} = event.target
-       var param;
-       const val = this.state.searchValue
-       if(this.state.searchQuery === "Artist")
-       {
-          param = { "artist" : val };
-          this.makeGetCall(param);
-       }
-       else if(this.state.searchQuery === "Name")
-       {
-          param = { name : val };
-          this.makeGetCall(param);
-       }
-       else if(this.state.searchQuery === "BPM")
-       {
-          param = { bpm : val };
-          this.makeGetCall(param);
-       }
-       else if(this.state.searchQuery === "Key")
-       {
-          param = { key : val };
-          this.makeGetCall(param);
-       }
-       else
-       {
-          const song_list = this.makeGetCall();
-       }
-       event.preventDefault();
+       this.makeGetCall(event);
+       event.preventDefault()
     }
 
 
