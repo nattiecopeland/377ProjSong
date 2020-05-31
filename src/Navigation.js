@@ -5,6 +5,7 @@ import SearchPage from "./SearchPage";
 import Form from "./Form";
 import CreateAccount from "./CreateAccount";
 import Song from "./Song";
+import UserPage from "./UserPage";
 
 class Navigation extends Component {
     render() {
@@ -63,7 +64,7 @@ class Navigation extends Component {
                             <></>
                         </Route>
                         <Route path="/user">
-                            <></>
+                            <UserPage />
                         </Route>
                         <Route path="/song">
                             <Song />
