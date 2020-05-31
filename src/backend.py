@@ -19,17 +19,17 @@ def hello_world():
 @app.route('/songs', methods=['GET', 'POST'])
 def get_songs():
     if request.method == 'GET':
-        search_songname = request.args.get('name')
-        search_artist = request.args.get('artist')
-        search_key = request.args.get('key')
-        search_bpm = request.args.get('bpm')
-        if search_songname:
+        search_songname = request.args.get('Name')
+        search_artist = request.args.get('Artist')
+        search_key = request.args.get('Key')
+        search_bpm = request.args.get('BPM')
+        if search_songname is not None:
             songs = SongBank().find_by_name(search_songname)  
-        elif search_artist :
+        elif search_artist is not None:
             songs = SongBank().find_by_artist(search_artist)
-        elif search_key :
+        elif search_key is not None:
             songs = SongBank().find_by_key(search_key)
-        elif search_artist :
+        elif search_bpm is not None:
             songs = SongBank().find_by_bpm(search_bpm)
         else :
             songs = SongBank().find_all()

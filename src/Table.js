@@ -62,7 +62,7 @@ class Table extends Component {
         </>}
         {this.state.page==="songPage" &&
         <>
-            <Song name={this.state.row.Name} artist={this.state.row.Artist} Key={this.state.row.Key} bpm={this.state.row.BPM} />
+            <Song Name={this.state.row.Name} Artist={this.state.row.Artist} Key={this.state.row.Key} BPM={this.state.row.BPM} />
             <input type="button" value="Return to results" onClick={() => {this.returnToResults()}}/>
         </>}
       </>
