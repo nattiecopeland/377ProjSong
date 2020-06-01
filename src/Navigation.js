@@ -6,8 +6,22 @@ import Form from "./Form";
 import CreateAccount from "./CreateAccount";
 import Song from "./Song";
 import UserPage from "./UserPage";
+import LoginPage from "./LoginPage";
 
 class Navigation extends Component {
+
+    state = {
+        current_user : ""
+    }
+
+    logout = event => {
+        this.setState({current_user : ''})
+    }
+
+    handleChangeValue = userName => {
+        this.setState({current_user : userName})
+    }
+
     render() {
         return(
             <Router>
@@ -22,28 +36,40 @@ class Navigation extends Component {
                             Search
                         </button>
                     </Link>{' '}
-                    <Link to="/add">
-                        <button>
-                            Add
-                        </button>
-                    </Link>{' '}
-                    <Link to="/create-account">
-                        <button>
-                            Create Account
-                        </button>
-                    </Link>{' '}
-                    <Link to="/login">
-                        <button>
-                            Login
-                        </button>
-                    </Link>{' '}
-                    <Link to="/user">
-                        <button>
-                            Userpage
-                        </button>
-                    </Link>{' '}
 
-                    <button onClick={this.logout}>Logout</button>
+                    {this.state.current_user === '' &&
+                        <>
+                            <Link to="/create-account">
+                                <button>
+                                    Create Account
+                                </button>
+                            </Link>{' '}
+                            <Link to="/login">
+                                <button>
+                                    Login
+                                </button>
+                            </Link>{' '}
+                        </>
+                    }
+                    {this.state.current_user !== '' &&
+                        <>
+                            <Link to="/add">
+                                <button>
+                                    Add
+                                </button>
+                            </Link>{' '}
+                            <Link to="/user">
+                                <button>
+                                    Userpage
+                                </button>
+                            </Link>{' '}
+                            <Link to="/">
+                                <button onClick={this.logout}>
+                                    Logout
+                                </button>
+                            </Link>
+                        </>
+                    }
 
                     <hr />
 
@@ -61,10 +87,10 @@ class Navigation extends Component {
                             <CreateAccount />
                         </Route>
                         <Route path="/login">
-                            <></>
+                            <LoginPage onChangeValue={this.handleChangeValue}/>
                         </Route>
                         <Route path="/user">
-                            <UserPage />
+                            <UserPage userName={this.state.current_user}/>
                         </Route>
                         <Route path="/song">
                             <Song />
