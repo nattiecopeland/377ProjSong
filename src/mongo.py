@@ -43,6 +43,11 @@ class UserBank(Model):
            user["_id"] = str(user["_id"])
        return users
 
+    def find_by_username(self, username):
+       users = list(self.collection.find({"username": username}))
+       for user in users:
+          user["_id"] = str(user["_id"])
+       return users
 
 class SongBank(Model):
     db_client = pymongo.MongoClient('localhost', 27017)

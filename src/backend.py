@@ -45,7 +45,11 @@ def get_songs():
 @app.route('/users', methods=['GET', 'POST'])
 def get_users():
     if request.method == 'GET':
-        users = UserBank().find_all()
+        search_username = request.args.get('username')
+        if search_username is not None:
+           users = UserBank().find_by_username(search_username)
+        else:
+           users = UserBank().find_all()
         return {"user_list": users}
     elif request.method == 'POST':
         userToAdd = request.get_json()
