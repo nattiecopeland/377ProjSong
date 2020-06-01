@@ -18,8 +18,8 @@ class Navigation extends Component {
         this.setState({current_user : ''})
     }
 
-    handleChangeValue = userName => {
-        this.setState({current_user : userName})
+    changeUser = username => {
+        this.setState({current_user : username})
     }
 
     render() {
@@ -81,16 +81,18 @@ class Navigation extends Component {
                             <SearchPage />
                         </Route>
                         <Route path="/add">
-                            <Form />
+                            <Form username={this.state.current_user}/>
                         </Route>
                         <Route path="/create-account">
                             <CreateAccount />
                         </Route>
                         <Route path="/login">
-                            <LoginPage onChangeValue={this.handleChangeValue}/>
+                            <LoginPage
+                                username={this.state.current_user}
+                                onChangeValue={this.changeUser}/>
                         </Route>
                         <Route path="/user">
-                            <UserPage userName={this.state.current_user}/>
+                            <UserPage username={this.state.current_user}/>
                         </Route>
                         <Route path="/song">
                             <Song />
