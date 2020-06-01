@@ -8,7 +8,8 @@ class CreateAccount extends Component {
         username:'',
         password:'',
         passConfirm:'',
-        submitted:false
+        submitted:false,
+        valid:false
     }
 
     state = this.initialState
@@ -21,13 +22,35 @@ class CreateAccount extends Component {
         })
     }
 
+    
     submitForm = () => {
         if(this.state.password === this.state.passConfirm) {
-            this.makePostCall(this.state)
-            this.setState({submitted: true})
+            this.makeGetCall()
+            if(this.state.valid === true)
+            {
+               this.makePostCall(this.state)
+               this.setState({submitted: true})
+            }
+            else
+            {
+               alert("Username already exists!")
+            }
         }
         else
             alert("Passwords do not match!")
+    }
+
+    makeGetCall() {
+        axios.get('http://localhost:5000/users', {params: {username: this.state.username}})
+        .then(response => {
+           if(response.data.user_list.length === 0)
+           {
+              this.setState({valid: true});
+           }
+        })
+        .catch(function (error) {
+          console.log(error);
+       })
     }
 
     makePostCall(account) {
