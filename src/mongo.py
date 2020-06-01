@@ -32,6 +32,18 @@ class Model(dict):
             self.clear()
             return resp
 
+
+class UserBank(Model):
+    db_client = pymongo.MongoClient('localhost', 27017)
+    collection = db_client["users"]["user_list"]
+
+    def find_all(self):
+       users = list(self.collection.find())
+       for user in users:
+           user["_id"] = str(user["_id"])
+       return users
+
+
 class SongBank(Model):
     db_client = pymongo.MongoClient('localhost', 27017)
     collection = db_client["songs"]["song_list"]

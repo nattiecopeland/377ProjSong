@@ -27,7 +27,6 @@ class CreateAccount extends Component {
     }
 
     makePostCall(account) {
-        /*
         return axios.post('http://localhost:5000/users', account)
             .then(function (response) {
                 console.log(response);
@@ -35,7 +34,7 @@ class CreateAccount extends Component {
             })
             .catch(function (error) {
                 console.log(error);
-            });*/
+            });
     }
 
 

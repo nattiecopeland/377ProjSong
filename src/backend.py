@@ -5,6 +5,7 @@ from flask_cors import CORS
 import random
 import string
 from mongo import SongBank
+from mongo import UserBank
 
 
 app = Flask(__name__)
@@ -39,6 +40,18 @@ def get_songs():
         newSong = SongBank(songToAdd)
         newSong.save()
         resp = jsonify(newSong), 201
+        return resp
+
+@app.route('/users', methods=['GET', 'POST'])
+def get_users():
+    if request.method == 'GET':
+        users = UserBank().find_all()
+        return {"user_list": users}
+    elif request.method == 'POST':
+        userToAdd = request.get_json()
+        newUser = UserBank(userToAdd)
+        newUser.save()
+        resp = jsonify(newUser), 201
         return resp
 
 # def generate_id():
