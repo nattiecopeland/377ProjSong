@@ -7,6 +7,7 @@ import CreateAccount from "./CreateAccount";
 import Song from "./Song";
 import UserPage from "./UserPage";
 import LoginPage from "./LoginPage";
+import Remove from "./Remove";
 
 class Navigation extends Component {
 
@@ -47,6 +48,15 @@ class Navigation extends Component {
                             <Link to="/login">
                                 <button>
                                     Login
+                                </button>
+                            </Link>{' '}
+                        </>
+                    }
+                    {this.state.current_user === 'Admin' &&
+                        <>
+                            <Link to="/remove">
+                                <button>
+                                    Remove
                                 </button>
                             </Link>{' '}
                         </>
@@ -96,6 +106,9 @@ class Navigation extends Component {
                         </Route>
                         <Route path="/song">
                             <Song />
+                        </Route>
+                        <Route path="/remove">
+                            <Remove />
                         </Route>
                     </Switch>
                 </div>

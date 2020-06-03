@@ -46,17 +46,43 @@ def get_songs():
 def get_users():
     if request.method == 'GET':
         search_username = request.args.get('username')
+        user_password = request.args.get('password')
         if search_username is not None:
            users = UserBank().find_by_username(search_username)
+           if user_password is not None:
+              if(len(users) == 1):
+                 if(users[0].get('password') == user_password):
+                    return {"user": users[0]}
+           else:
+              if(len(users) == 1):
+                 return {"user":users[0]}
+           return {"user" : None}
         else:
            users = UserBank().find_all()
-        return {"user_list": users}
+           return {"user_list": users}
     elif request.method == 'POST':
         userToAdd = request.get_json()
         newUser = UserBank(userToAdd)
         newUser.save()
         resp = jsonify(newUser), 201
         return resp
+
+@app.route('/songs/<id>', methods=['GET','DELETE'])
+def get_song(id):
+   songs = SongBank().find_all()
+   if request.method == 'GET':
+      if id :
+         for song in songs:
+            if str(song['_id']) == id:
+               return song
+         return songs
+   elif request.method == 'DELETE':
+      if id:
+         song = SongBank({"_id":id})
+         res= song.remove()
+         #if res.nRemoved > 0:
+         return {}, 204
+      return 404 
 
 # def generate_id():
 #     lettersAndDigits = string.ascii_letters + string.digits
