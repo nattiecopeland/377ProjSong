@@ -53,6 +53,12 @@ class SongBank(Model):
     db_client = pymongo.MongoClient('localhost', 27017)
     collection = db_client["songs"]["song_list"]
 
+    def find_by_id(self, id):
+        songs = list(self.collection.find({"_id":id}))
+        for song in songs:
+            song["_id"] = str(song["_id"])
+        return songs
+
     def find_all(self):
         songs = list(self.collection.find())
         for song in songs:

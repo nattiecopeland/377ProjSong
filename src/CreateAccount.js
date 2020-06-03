@@ -23,9 +23,13 @@ class CreateAccount extends Component {
     }
 
     
+    handleSubmit = () => {
+        this.makeGetCall()
+        setTimeout(this.submitForm, 1000)
+   }
+
     submitForm = () => {
         if(this.state.password === this.state.passConfirm) {
-            this.makeGetCall()
             if(this.state.valid === true)
             {
                this.makePostCall(this.state)
@@ -41,11 +45,15 @@ class CreateAccount extends Component {
     }
 
     makeGetCall() {
-        axios.get('http://localhost:5000/users', {params: {username: this.state.username}})
+        return axios.get('http://localhost:5000/users', {params: {username: this.state.username}})
         .then(response => {
-           if(response.data.user_list.length === 0)
+           if(response.data.user)
            {
-              this.setState({valid: true});
+              this.setState({valid: false})
+           }
+           else
+           {
+              this.setState({valid: true})
            }
         })
         .catch(function (error) {
@@ -96,7 +104,7 @@ class CreateAccount extends Component {
                         name="passConfirm"
                         id="passConfirm"
                         onChange={this.handleChange}/>
-                    <input type="button" value="Submit" onClick={this.submitForm} />
+                    <input type="button" value="Submit" onClick={this.handleSubmit} />
                 </form>
             )
     }
