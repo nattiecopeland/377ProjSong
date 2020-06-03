@@ -82,3 +82,25 @@ class SongBank(Model):
         for song in songs:
             song["_id"] = str(song["_id"])
         return songs
+
+    def find_by_reported(self):
+        songs = list(self.collection.find({"reported": True}))
+        for song in songs:
+            song["_id"] = str(song["_id"])
+        return songs
+
+    def find_by_ids(self, ids: list):
+        songs = list()
+        for songid in ids:
+            song = self.collection.findOne({"_id": songid})
+            songs.append(song)    
+        for song in songs:
+            song["_id"] = str(song["_id"])
+        return songs
+
+    def report_song(seld, songid):
+        song = self.collection.findOne({"_id": songid})
+        if song:
+            song["reported"] = True;
+        return song;
+        
