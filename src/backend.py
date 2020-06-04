@@ -17,7 +17,7 @@ CORS(app) #Here we'll allow requests coming from any domain. Not recommended for
 def hello_world():
     return 'Welcome to Song Bank!'
 
-@app.route('/songs', methods=['GET', 'POST'])
+@app.route('/songs', methods=['GET', 'POST', 'PATCH'])
 def get_songs():
     if request.method == 'GET':
         search_songname = request.args.get('Name')
@@ -41,6 +41,12 @@ def get_songs():
         newSong.save()
         resp = jsonify(newSong), 201
         return resp
+   elif request.method == 'PATCH':
+         songToReport = request.args.get('_id')
+         song = SongBank.report_song(songToReport)
+         song.save()
+         resp = jsonify(song), 201
+         return resp
 
 @app.route('/users', methods=['GET', 'POST'])
 def get_users():

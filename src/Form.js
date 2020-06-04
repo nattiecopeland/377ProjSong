@@ -11,6 +11,7 @@ class Form extends Component {
       BPM: '',
       username: '',
       logged_in: false
+      reported: false
    }
     constructor(props) {
         super(props);
