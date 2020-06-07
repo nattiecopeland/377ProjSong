@@ -20,5 +20,4 @@ jobs:
       - npm install axios
       script:
       - npm run build
-      - npm stop
   
