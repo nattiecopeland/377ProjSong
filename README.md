@@ -36,6 +36,10 @@ Diagrams:
 https://github.com/nattiecopeland/377ProjSong/wiki
 
 
+CI Web Page:
+https://travis-ci.com/github/nattiecopeland/377ProjSong
+
+
 Style Guides:
 https://www.python.org/dev/peps/pep-0008/
 https://prettier.io/docs/en/options.html
