@@ -49,12 +49,21 @@ class UserBank(Model):
           user["_id"] = str(user["_id"])
        return users
 
+    def add_favorite(self, username, _id):
+       user = self.collection.find_one({"username":username})
+       if user:
+          try:
+             user["favorites"].index(_id)
+          except ValueError:
+             user["favorites"].append(_id)
+       return user
+
 class SongBank(Model):
     db_client = pymongo.MongoClient('localhost', 27017)
     collection = db_client["songs"]["song_list"]
 
     def find_by_id(self, id):
-        songs = list(self.collection.find({"_id":id}))
+        songs = list(self.collection.find({"_id":ObjectId(id)}))
         for song in songs:
             song["_id"] = str(song["_id"])
         return songs
@@ -98,14 +107,15 @@ class SongBank(Model):
     def find_by_ids(self, ids: list):
         songs = list()
         for songid in ids:
-            song = self.collection.findOne({"_id": songid})
+            song = self.collection.find_one({"_id": ObjectId(songid)})
             songs.append(song)    
         for song in songs:
             song["_id"] = str(song["_id"])
         return songs
 
-    def report_song(seld, songid):
-        song = self.collection.findOne({"_id": songid})
+    def report_song(self, songid):
+        song = self.collection.find_one({"_id": ObjectId(songid)})
+        print(song)
         if song:
-            song["reported"] = True;
-        return song;
+            song["reported"] = True
+        return song

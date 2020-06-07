@@ -41,21 +41,25 @@ def get_songs():
         newSong.save()
         resp = jsonify(newSong), 201
         return resp
-   elif request.method == 'PATCH':
+    elif request.method == 'PATCH':
          songToReport = request.args.get('_id')
-         song = SongBank.report_song(songToReport)
-         song.save()
-         resp = jsonify(song), 201
-         return resp
+         song = SongBank().report_song(songToReport)
+         if song:
+            SongBank(song).save()
+            return {}, 204
+         return {}, 404
 
-@app.route('/users', methods=['GET', 'POST'])
+@app.route('/users', methods=['GET', 'POST', 'PATCH'])
 def get_users():
     if request.method == 'GET':
         search_username = request.args.get('username')
         user_password = request.args.get('password')
+        get_favorites = request.args.get('get_favorites')
         if search_username is not None:
            users = UserBank().find_by_username(search_username)
-           if user_password is not None:
+           if get_favorites:
+              return {"song_list" : SongBank().find_by_ids(users[0]["favorites"])}
+           elif user_password is not None:
               if(len(users) == 1):
                  if(users[0].get('password') == user_password):
                     return {"user": users[0]}
@@ -72,6 +76,14 @@ def get_users():
         newUser.save()
         resp = jsonify(newUser), 201
         return resp
+    elif request.method == 'PATCH':
+        username = request.args.get('username')
+        idToAdd = request.args.get('_id')
+        user = UserBank().add_favorite(username,idToAdd)
+        if user:
+            UserBank(user).save()
+            return {}, 204
+        return {}, 404
 
 @app.route('/songs/<id>', methods=['GET','DELETE'])
 def get_song(id):

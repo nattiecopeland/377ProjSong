@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-//import Table from "./Table";
 import axios from 'axios';
 import {Redirect} from "react-router-dom";
 
@@ -10,7 +9,7 @@ class Form extends Component {
       Key: '',
       BPM: '',
       username: '',
-      logged_in: false
+      logged_in: false,
       reported: false
    }
     constructor(props) {
@@ -22,7 +21,8 @@ class Form extends Component {
             Key: '',
             BPM: '',
             username: props.username,
-            logged_in: (props.username!=='')
+            logged_in: (props.username!==''),
+            reported: false
         }
     }
 

@@ -7,7 +7,18 @@ class SearchPage extends Component {
     state = {
         searchResult : [],
         searchQuery : "Artist",
-        searchValue : ''
+        searchValue : '',
+        current_user: ""
+    }
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            searchResult : [],
+            searchQuery : "Artist",
+            searchValue : '',
+            current_user: props.current_user
+        }
     }
 
     handleChange = event => {
@@ -57,7 +68,7 @@ class SearchPage extends Component {
                  <input type="submit" value="Submit" />
                </form>
                <div className="table">
-                 <Table songData={this.state.searchResult} searchTerm={this.state.searchQuery} searchWord={this.state.searchValue} goTo={this.goTo}/>
+                 <Table current_user={this.state.current_user} songData={this.state.searchResult} searchTerm={this.state.searchQuery} searchWord={this.state.searchValue} goTo={this.goTo}/>
                </div>
             </>
         )

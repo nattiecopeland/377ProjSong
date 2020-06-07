@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Song from "./Song";
+import axios from "axios";
 
 
 const TableHeader = () => {
@@ -17,8 +18,21 @@ const TableHeader = () => {
 }
 
 class Table extends Component {
-    state = { page : "resultsPage"}
-  TableBody = props => {
+    state = {
+        page : "resultsPage",
+        current_user : ""
+    }
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            page : "resultsPage",
+            current_user : props.current_user
+        }
+    }
+
+
+    TableBody = props => {
     const rows = props.songData.map((row, index) => {
         return (
             <tr key={index}>
@@ -48,6 +62,28 @@ class Table extends Component {
         })
   }
 
+  addFavorite = () => {
+      axios.patch('http://localhost:5000/users',{},{params : {username:this.props.current_user, _id:this.state.row._id}})
+          .then(function(response) {
+              console.log(response);
+              return (response.status === 200);
+          })
+          .catch(function (error) {
+              console.log(error);
+          })
+  }
+
+  reportSong = () => {
+      axios.patch('http://localhost:5000/songs',{},{params : {_id : this.state.row._id}})
+          .then(function(response) {
+              console.log(response);
+              return (response.status === 200);
+          })
+          .catch(function (error) {
+              console.log(error);
+          })
+  }
+
   render() {
     const {songData} = this.props
  
@@ -63,7 +99,13 @@ class Table extends Component {
         {this.state.page==="songPage" &&
         <>
             <Song Name={this.state.row.Name} Artist={this.state.row.Artist} Key={this.state.row.Key} BPM={this.state.row.BPM} />
-            <input type="button" value="Return to results" onClick={() => {this.returnToResults()}}/>
+            {this.state.current_user !== '' &&
+                <>
+                    <input type="button" value="Favorite" onClick={this.addFavorite}/>{' '}
+                    <input type="button" value="Report" onClick={this.reportSong}/>{' '}
+                </>
+            }
+            <input type="button" value="Return to list" onClick={() => {this.returnToResults()}}/>
         </>}
       </>
     )

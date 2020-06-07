@@ -8,6 +8,7 @@ class CreateAccount extends Component {
         username:'',
         password:'',
         passConfirm:'',
+        favorites: {},
         submitted:false,
         valid:false
     }

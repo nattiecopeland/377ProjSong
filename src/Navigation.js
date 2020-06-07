@@ -88,7 +88,7 @@ class Navigation extends Component {
                             <HomePage />
                         </Route>
                         <Route path="/search">
-                            <SearchPage />
+                            <SearchPage current_user={this.state.current_user}/>
                         </Route>
                         <Route path="/add">
                             <Form username={this.state.current_user}/>
