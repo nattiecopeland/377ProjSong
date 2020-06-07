@@ -32,7 +32,12 @@ Project Environment Set-Up:
 - Note: Please do not push any code until you are confident that it builds correctly!
 
 
+Diagrams:
+https://github.com/nattiecopeland/377ProjSong/wiki
 
+
+CI Web Page:
+https://travis-ci.com/github/nattiecopeland/377ProjSong
 
 
 Style Guides:
