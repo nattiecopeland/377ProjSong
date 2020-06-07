@@ -1,4 +1,4 @@
-import backend
+from backend import *
 import pytest
 class TestClass:
    def test_req1(self):
