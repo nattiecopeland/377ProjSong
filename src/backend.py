@@ -83,7 +83,7 @@ def get_users():
         if user:
             UserBank(user).save()
             return {}, 204
-        return {}, 404
+        return 404
 
 @app.route('/songs/<id>', methods=['GET','DELETE'])
 def get_song(id):
