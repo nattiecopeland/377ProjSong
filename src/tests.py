@@ -174,3 +174,58 @@ class TestClass:
          idlist.append((SongBank(song))["_id"])
       res = SongBank.find_by_ids(sb, idlist)
       assert(len(res)) == 3
+
+   def test_user_empty(self):
+      ub = UserBank()
+      users = UserBank.find_all(ub)
+      for user in users:
+         u = UserBank(user)
+         u.remove()
+      assert len(UserBank.find_all(ub)) == 0
+
+   def test_user_find_all(self):
+      usera = {
+        "username":'A',
+        "password":'A',
+        "logged_in":False,
+        "correct_login":False,
+        "favorites" : []
+      }
+      userb = {
+        "username":'B',
+        "password":'B',
+        "logged_in":False,
+        "correct_login":False,
+        "favorites" : []
+      }
+      ub = UserBank()
+      a = UserBank(usera)
+      a.save()
+      b = UserBank(userb)
+      b.save()
+
+      assert(len(UserBank.find_all(ub)) == 2)
+
+   def test_user_find_by_username(self):
+      ub = UserBank()
+      res = UserBank.find_by_username(ub, 'A')
+      assert(len(res)) == 1
+      assert res[0]["username"] == 'A'
+      assert res[0]["password"] == 'A'
+      assert res[0]["logged_in"] == False
+      assert res[0]["correct_login"] == False
+      assert len(res[0]["favorites"]) == 0
+      res = UserBank.find_by_username(ub, 'C')
+      assert(len(res)) == 0
+
+   def test_user_add_favorite(self):
+      ub = UserBank()
+      sb = SongBank()
+      songa = (SongBank.find_by_name(sb, 'A'))[0]
+      a = SongBank(songa)
+      ua = UserBank((UserBank.find_by_username(ub, 'A'))[0])
+      assert len(ua["favorites"]) == 0
+      ua = UserBank.add_favorite(ub, ua["username"], a["_id"])
+      assert len(ua["favorites"]) == 1
+      assert ua["favorites"][0] == a["_id"]
+
