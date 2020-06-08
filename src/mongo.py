@@ -108,7 +108,8 @@ class SongBank(Model):
         songs = list()
         for songid in ids:
             song = self.collection.find_one({"_id": ObjectId(songid)})
-            songs.append(song)
+            if(song):
+                songs.append(song)
         if(songs):   
             for song in songs:
                 song["_id"] = str(song["_id"])
